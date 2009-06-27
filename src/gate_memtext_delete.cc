@@ -26,6 +26,23 @@ int request_delete(void* user,
 		memtext_command cmd,
 		memtext_request_delete* r)
 {
+	int fd = CAST_USER(user);
+
+	memcached_return err;
+
+	{
+		proxy_client::ref mc( proxy_client::get() );
+		err = memcached_delete(*mc, r->key, r->key_len, r->exptime);
+	}
+
+	if(r->noreply) { return 0; }
+
+	if(err) {
+		send_error(fd, err);
+		return 0;
+	}
+
+	send_static(fd, "DELETED\r\n");
 	return 0;
 }
 

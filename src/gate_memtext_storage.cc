@@ -26,6 +26,25 @@ int request_set(void* user,
 		memtext_command cmd,
 		memtext_request_storage* r)
 {
+	int fd = CAST_USER(user);
+
+	memcached_return err;
+
+	{
+		proxy_client::ref mc( proxy_client::get() );
+		err = memcached_set(*mc, r->key, r->key_len,
+				r->data, r->data_len, r->exptime, r->flags);
+	}
+
+	if(r->noreply) { return 0; }
+
+	if(err) {
+		send_error(fd, err);
+		return 0;
+	}
+
+	send_static(fd, "STORED\r\n");
+
 	return 0;
 }
 
