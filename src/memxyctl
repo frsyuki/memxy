@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'optparse'
+
+MEMXY_PORT = 11001
+
+def usage
+	puts "Usage: #{File.basename($0)} <host[:port=#{MEMXY_PORT}]> <servers...>"
+	exit 1
+end
+
+if ARGV.length < 2
+	usage
+end
+
+addr = ARGV.shift
+servers = ARGV
+
+host, port = addr.split(':',2)
+port ||= MEMXY_PORT
+
+servers_str = servers.join(',')
+req = [servers_str.length].pack('N') + servers_str
+
+sock = TCPSocket.new(host, port)
+sock.write(req)
+sock.close
+

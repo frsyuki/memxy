@@ -21,13 +21,18 @@ memcached proxy
 
 *Usage
 
-  Usage: ./src/memxy [options]  [initial server list]
+  Usage: memxy [options]  [initial server list]
    -t PORT=11211      : proxy port (text)
+   -c PORT=11001      : control port
    -h                 : print this help message
    -o <path.log>      : log file
    -d <path.pid>      : daemonize and output pid into the file
    -v                 : verbose mode
 
+  Example:
+
+    $ memxy -t 3000 -d memxy.pid -o memxy
+    $ memxyctl localhost server1.host server2.host server3.host
 
 
 Copyright (C) 2009 FURUHASHI Sadayuki <frsyuki _at_ users.sourceforge.jp>
