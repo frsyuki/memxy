@@ -32,7 +32,7 @@ namespace memtext {
 // "VALUE "+keylen+" "+uint32+" "+uint32+" "+uint64+"\r\n\0"
 //          keylen     flags      vallen      cas
 #define HEADER_SIZE(keylen) \
-		6 +(keylen)+ 1+  10  + 1 +  10  + 1 +  20  +  3
+		(6 +(keylen)+ 1+  10  + 1 +  10  + 1 +  20  +  3)
 
 
 static int request_get_single(void* user,
@@ -212,7 +212,7 @@ static int request_get_multi(void* user,
 		}
 
 		pv->iov_base = p;
-		memcpy(p, "\r\nEND\r\nVALUE ", 13);  p += 13;
+		memcpy(p, "\r\nVALUE ", 8);  p += 8;
 	header_set:
 		memcpy(p, r->key[i], r->key_len[i]);  p += r->key_len[i];
 		p += sprintf(p, " %"PRIu32" %lu", multi[i].flags, multi[i].vallen);

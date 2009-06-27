@@ -50,4 +50,3 @@ int request_delete(void* user,
 }  // namespace memtext
 }  // namespace memxy
 
-
