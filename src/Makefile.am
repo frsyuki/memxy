@@ -4,10 +4,12 @@ export RAGEL
 SUBDIRS = mp mpsrc cclog
 
 bin_PROGRAMS = memxy
+bin_SCRIPTS = memxyctl
 
 memxy_SOURCES = \
 		memproto/memproto.c \
 		memproto/memtext.c \
+		gate_control.cc \
 		gate_memtext.cc \
 		gate_memtext_impl.cc \
 		gate_memtext_retrieval.cc \
@@ -20,6 +22,7 @@ memxy_SOURCES = \
 noinst_HEADERS = \
 		memproto/memproto.h \
 		memproto/memtext.h \
+		gate_control.h \
 		gate_memtext.h \
 		gate_memtext_impl.h \
 		gate_memtext_retrieval.h \
