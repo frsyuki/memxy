@@ -15,36 +15,40 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
-#ifndef GATE_MEMTEXT_IMPL_H__
-#define GATE_MEMTEXT_IMPL_H__
-
-#include "gate_memtext.h"
-#include "proxy_client.h"
-#include "wavy_core.h"
+#include "gate_memtext_impl.h"
 
 namespace memxy {
 namespace memtext {
 
 
-#define CAST_USER(user) ((int)(ptrdiff_t)(user))
-
-
-static const char* const NOT_SUPPORTED_REPLY = "CLIENT_ERROR supported\r\n";
-static const char* const GET_FAILED_REPLY    = "SERVER_ERROR get failed\r\n";
-static const char* const STORE_FAILED_REPLY  = "SERVER_ERROR store failed\r\n";
-static const char* const DELETE_FAILED_REPLY = "SERVER_ERROR delete failed\r\n";
-
-
-static inline void send_static(int fd, const char* str)
+void send_error(int fd, int err)
 {
-	core::write(fd, str, strlen(str));
+	switch(err) {
+	case MEMCACHED_NOTSTORED:
+		send_static(fd, "NOT_STORED\r\n");
+		break;
+	case MEMCACHED_DELETED:
+		send_static(fd, "DELETED\r\n");
+		break;
+	case MEMCACHED_NOTFOUND:
+		send_static(fd, "NOT_FOUND\r\n");
+		break;
+	case MEMCACHED_CLIENT_ERROR:
+		send_static(fd, "CLIENT_ERROR\r\n");
+		break;
+	case MEMCACHED_NO_SERVERS:
+		send_static(fd, "SERVER_ERROR no server\r\n");
+		break;
+	case MEMCACHED_SERVER_ERROR:
+		send_static(fd, "SERVER_ERROR\r\n");
+		break;
+	default:
+		send_static(fd, "SERVER_ERROR unknown error\r\n");
+		break;
+	}
 }
-
-void send_error(int fd, int err);
 
 
 }  // namespace memtext
 }  // namespace memxy
-
-#endif /* gate_memtext_impl.h */
 

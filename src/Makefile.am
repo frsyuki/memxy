@@ -9,6 +9,7 @@ memxy_SOURCES = \
 		memproto/memproto.c \
 		memproto/memtext.c \
 		gate_memtext.cc \
+		gate_memtext_impl.cc \
 		gate_memtext_retrieval.cc \
 		gate_memtext_storage.cc \
 		gate_memtext_delete.cc \
@@ -20,6 +21,10 @@ noinst_HEADERS = \
 		memproto/memproto.h \
 		memproto/memtext.h \
 		gate_memtext.h \
+		gate_memtext_impl.h \
+		gate_memtext_retrieval.h \
+		gate_memtext_storage.h \
+		gate_memtext_delete.h \
 		proxy_client.h \
 		wavy_core.h
 
