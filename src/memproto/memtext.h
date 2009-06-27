@@ -54,26 +54,26 @@ typedef enum {
 
 
 typedef struct {
-	const char** key;
-	unsigned* key_len;
+	char** key;
+	size_t* key_len;
 	unsigned key_num;
 } memtext_request_retrieval;
 
 typedef struct {
-	const char* key;
-	unsigned key_len;
-	const char* data;
-	unsigned data_len;
+	char* key;
+	size_t key_len;
+	char* data;
+	size_t data_len;
 	unsigned short flags;
 	uint32_t exptime;
 	bool noreply;
 } memtext_request_storage;
 
 typedef struct {
-	const char* key;
-	unsigned key_len;
-	const char* data;
-	unsigned data_len;
+	char* key;
+	size_t key_len;
+	char* data;
+	size_t data_len;
 	unsigned short flags;
 	uint32_t exptime;
 	bool noreply;
@@ -81,15 +81,15 @@ typedef struct {
 } memtext_request_cas;
 
 typedef struct {
-	const char* key;
-	unsigned key_len;
+	char* key;
+	size_t key_len;
 	uint32_t exptime;
 	bool noreply;
 } memtext_request_delete;
 
 typedef struct {
-	const char* key;
-	unsigned key_len;
+	char* key;
+	size_t key_len;
 	uint64_t value;
 	bool noreply;
 } memtext_request_numeric;
@@ -138,7 +138,7 @@ typedef struct {
 	memtext_command command;
 
 	size_t key_pos[MEMTEXT_MAX_MULTI_GET];
-	unsigned int key_len[MEMTEXT_MAX_MULTI_GET];
+	size_t key_len[MEMTEXT_MAX_MULTI_GET];
 	unsigned int keys;
 
 	size_t flags;
@@ -148,7 +148,7 @@ typedef struct {
 	uint64_t cas_unique;
 
 	size_t data_pos;
-	unsigned int data_len;
+	size_t data_len;
 
 	memtext_callback callback;
 
@@ -156,7 +156,7 @@ typedef struct {
 } memtext_parser;
 
 void memtext_init(memtext_parser* ctx, memtext_callback* callback, void* user);
-int memtext_execute(memtext_parser* ctx, const char* data, size_t len, size_t* off);
+int memtext_execute(memtext_parser* ctx, char* data, size_t len, size_t* off);
 
 #ifdef __cplusplus
 }

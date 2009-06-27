@@ -145,7 +145,7 @@
 		CALLBACK(cb, memtext_callback_retrieval);
 		if(cb) {
 			memtext_request_retrieval req = {
-				(const char**)ctx->key_pos,
+				(char**)ctx->key_pos,
 				ctx->key_len,
 				ctx->keys
 			};
@@ -301,17 +301,17 @@ void memtext_init(memtext_parser* ctx, memtext_callback* callback, void* user)
 	ctx->user = user;
 }
 
-int memtext_execute(memtext_parser* ctx, const char* data, size_t len, size_t* off)
+int memtext_execute(memtext_parser* ctx, char* data, size_t len, size_t* off)
 {
 	if(len <= *off) { return 0; }
 
-	const char* p = data + *off;
-	const char* pe = data + len;
-	const char* eof = pe;
+	char* p = data + *off;
+	char* pe = data + len;
+	char* eof = pe;
 	int cs = ctx->cs;
 	int top = ctx->top;
 	int* stack = ctx->stack;
-	const char* pos;
+	char* pos;
 	char numbuf[NUM_BUF_MAX+1];
 
 	//printf("execute, len:%lu, off:%lu\n", len, *off);

@@ -149,9 +149,11 @@ public:
 
 	void wait_init()
 	{
-		pthread_scoped_lock lk(m_init->start_mutex);
-		while(!m_init->started) {
-			m_init->start_cond.wait(m_init->start_mutex);
+		{
+			pthread_scoped_lock lk(m_init->start_mutex);
+			while(!m_init->started) {
+				m_init->start_cond.wait(m_init->start_mutex);
+			}
 		}
 		m_init.reset();
 	}
